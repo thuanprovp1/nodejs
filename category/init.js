@@ -4,6 +4,6 @@
 exports.initCategoryRouter = function initCategoryRouter(app) {
     app.get('/category/fetch', require('./fetch'));
     app.post('/category/create', require('./create'));
-    app.post('/category/update/:id', require('./update'));
-    app.get('/category/delete/:id', require('./delete'));
+    app.post('/category/update', require('./update'));
+    app.get('/category/delete', require('./delete'));
 };

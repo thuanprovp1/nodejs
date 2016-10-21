@@ -2,12 +2,12 @@
  * Created by Thuan on 10/15/2016.
  */
 module.exports = function updateProduct(req, res) {
-
+        var ObjectId = require("mongodb").ObjectId;
         var updateDoc = req.body;
         delete updateDoc._id;
 
-        global.db.collection('product').updateOne(
-            {id: (req.param.id)}, {
+        global.db.collection('user').updateOne(
+            {_id: ObjectId(req.query.id)}, {
                 $set: updateDoc,
                 $currentDate: {"lastModified": true}
             },

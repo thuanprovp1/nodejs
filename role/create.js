@@ -9,8 +9,6 @@ module.exports = function createRole(req, res) {
         req.body.name
     );
 
-    console.log(myRole.getRole());
-
     global.db.collection('role').insertOne(
         myRole.getRole(),
         function (err, doc) {

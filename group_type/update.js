@@ -3,11 +3,12 @@
  */
 module.exports = function updateProduct(req, res) {
 
+        var ObjectId=require('mongodb').ObjectID;
         var updateDoc = req.body;
         delete updateDoc._id;
 
-        global.db.collection('product').updateOne(
-            {id: (req.param.id)}, {
+        global.db.collection('group_type').updateOne(
+            {_id: ObjectId(req.query.id)}, {
                 $set: updateDoc,
                 $currentDate: {"lastModified": true}
             },

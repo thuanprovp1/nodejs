@@ -4,6 +4,6 @@
 exports.initUserRouter = function initUserRouter(app) {
     app.get('/user/fetch', require('./fetch'));
     app.post('/user/create', require('./create'));
-    app.post('/user/update/:id', require('./update'));
-    app.get('/user/delete/:id', require('./delete'));
+    app.post('/user/update', require('./update'));
+    app.get('/user/delete', require('./delete'));               // khong can khai báo :id
 };

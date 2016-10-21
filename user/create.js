@@ -10,9 +10,7 @@ module.exports = function createUser(req, res) {
         req.body.password,
         req.body.role_id
     );
-
-    console.log(myUser.getUser());
-
+    
     global.db.collection('user').insertOne(
         myUser.getUser(),
         function (err, doc) {
