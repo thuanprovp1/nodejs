@@ -28,6 +28,12 @@ mongodb.MongoClient.connect('mongodb://thuanprovp1:123456@ds059306.mlab.com:5930
         process.exit(1);
     }
     console.log("Database connected");
-    process.env.db = database;
-    require('./product/init').initProductRouter(app, database);
+    global.db = database;
+    
+    require('./product/init').initProductRouter(app);
+    require('./group_type/init').initGrouptypeRouter(app);
+    require('./category/init').initCategoryRouter(app);
+    require('./group/init').initGroupRouter(app);
+    require('./role/init').initRoleRouter(app);
+    require('./user/init').initUserRouter(app);
 });
