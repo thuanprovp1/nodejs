@@ -1,16 +1,9 @@
 /**
  * Created by Thuan on 10/16/2016.
  */
-var role = function () {
-    this.setRole = function (name) {
-        this.name = name
-    };
+var mongoose = require('mongoose');
+var roleSchema = mongoose.Schema({
+    name : String
+});
 
-    this.getRole = function () {
-        return {
-            name: this.name
-        }
-    }
-};
-
-module.exports = role;
+module.exports = mongoose.model('Role', roleSchema);

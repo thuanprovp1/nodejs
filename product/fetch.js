@@ -2,12 +2,19 @@
  * Created by Thuan on 10/15/2016.
  */
 module.exports = function fetchProduct(req, res) {
-    global.db.collection('product').find({}).toArray(function (err, docs) {
+    var Product = require('./product.object');
+    var Category = require('../category/category.object');
+    var User = require('../user/user.object');
+
+    Product.find({})
+        .populate('categories')
+        .populate('users')
+        .exec(function (err, docs) {
         if (err) {
             res.status(400).json({message: err});
         }
         else {
-            res.status(200).json(docs);
+            res.status(200).json({"data": docs});
         }
     });
 };

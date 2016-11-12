@@ -2,24 +2,33 @@
  * Created by Thuan on 10/15/2016.
  */
 module.exports = function createGroup(req, res) {
-    var group = require('./group.object');
-    var myGroup = new group();
+    var Group = require('./group.object');
+    var validateObjectExist = require('../utils/validateObjectExist');
+    var validatePropertyObject = require('../utils/validatePropertyObject');
 
-    myGroup.setGroup(
-        req.body.group_type_id, req.body.product_id
-    );
+    var errorHandler = function (status, message) {
+        res.status(status).json({
+            message: message.toString()
+        });
+    };
 
-    console.log(myGroup.getGroup());
-
-    global.db.collection('group').insertOne(
-        myGroup.getGroup(),
-        function (err, doc) {
+    var createGroup = function () {
+        var group = new Group({
+            groupType: req.body.groupType,
+            product: req.body.product
+        });
+        group.save(function (err, docs) {
             if (err) {
-                res.status(400).json({message: err})
+                res.status(400).json({message: err});
             }
-            else
-                res.status(201).json(doc.ops[0]);
-        }
-    );
+            else {
+                res.status(200).json(docs);
+            }
+        });
+    };
+
+    validatePropertyObject(req.body, ['groupType','product'])
+        .then(createGroup, errorHandler.bind(null, 400));
+
 };
 

@@ -1,16 +1,13 @@
 /**
  * Created by Thuan on 10/16/2016.
  */
-var group_type = function () {
-    this.setGrouptype = function (barcode) {
-        this.barcode = barcode;
-    };
-
-    this.getGrouptype = function () {
-        return {
-            barcode: this.barcode
-        }
+var mongoose = require('mongoose');
+var groupTypeSchema = mongoose.Schema({
+        code: String
+    }, 
+    {
+        timestamps: true
     }
-};
+);
 
-module.exports = group_type;
+module.exports = mongoose.model('GroupType', groupTypeSchema);

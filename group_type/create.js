@@ -1,24 +1,31 @@
 /**
  * Created by Thuan on 10/15/2016.
  */
-module.exports = function createGrouptype(req, res) {
-    var group_type = require('./group_type.object');
-    var myGrouptype = new group_type();
+module.exports = function createGroupType(req, res) {
+    var GroupType = require('./group_type.object');
+    var validatePropertyObject = require('../utils/validatePropertyObject');
 
-    myGrouptype.setGrouptype(
-        req.body.barcode, req.body.name
-    );
+    var errorHandler = function (status, message) {
+        res.status(status).json({
+            message: message.toString()
+        });
+    };
 
-    console.log(myGrouptype.getGrouptype());
-
-    global.db.collection('group_type').insertOne(
-        myGrouptype.getGrouptype(),
-        function (err, doc) {
+    var createGroupType = function () {
+        var groupType = new GroupType({
+            code: req.body.code
+        });
+        groupType.save(function (err, docs) {
             if (err) {
-                res.status(400).json({message: err})
+                res.status(400).json({message: err});
             }
-            else
-                res.status(201).json(doc.ops[0]);
-        }
-    );
+            else {
+                res.status(200).json(docs);
+            }
+        });
+    };
+
+    validatePropertyObject(req.body, ['code'])
+        .then(createGroupType, errorHandler.bind(null, 400));
+
 };

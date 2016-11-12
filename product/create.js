@@ -2,27 +2,48 @@
  * Created by Thuan on 10/15/2016.
  */
 module.exports = function createProduct(req, res) {
-    var product = require('./product.object');
-    var myProduct = new product();
+    var Product = require('./product.object');
+    var validateObjectExist = require('../utils/validateObjectExist');
+    var validatePropertyObject = require('../utils/validatePropertyObject');
 
-    myProduct.setProduct(
-        req.body.barcode, req.body.name,
-        req.body.price, req.body.category_id,
-        req.body.user_id, req.body.created_date,
-        req.body.modified_date, req.body.url_img
-    );
+    var errorHandler = function (status, message) {
+        res.status(status).json({   
+            message: message.toString()
+        });
+    };
 
-    console.log(myProduct.getProduct());
-
-    global.db.collection('product').insertOne(
-        myProduct.getProduct(),
-        function (err, doc) {
+    var createProduct = function () {
+        var product = new Product({
+            code: req.body.code,
+            name: req.body.name,
+            price: req.body.price,
+            category: req.body.category,
+            user: req.body.user
+        });
+        product.save(function (err, docs) {
             if (err) {
-                res.status(400).json({message: err})
+                res.status(400).json({message: err});
             }
-            else
-                res.status(201).json(doc.ops[0]);
-        }
-    );
+            else {
+                res.status(200).json(docs);
+            }
+        });
+    };
+
+    validatePropertyObject(req.body, ['name', 'code'])
+        .then(validateAllObjectExist, errorHandler.bind(null, 400));
+
+    var validateAllObjectExist = function() {
+        validateObjectExist(Category, req.body.category)
+            .then(function() {
+                validateObjectExist(User, req.body.user)
+                    .then(
+                        createProduct, errorHandler.bind(null, 400)
+                    );
+            }, errorHandler.bind(null, 400))
+            .catch(function(err) {
+                errorHandler(500, err);
+            });
+    }
 };
 

@@ -1,25 +1,34 @@
 /**
  * Created by Thuan on 10/15/2016.
  */
+
 module.exports = function createCategory(req, res) {
-    var category = require('./category.object');
-    var myCategory = new category();
+    var Category = require('../category/category.object');
+    var validatePropertyObject = require('../utils/validatePropertyObject');
+    
+    var errorHandler = function (status, message) {
+        res.status(status).json({
+            message: message.toString()
+        });
+    };
 
-    myCategory.setcategory(
-        req.body.barcode, req.body.name
-    );
-
-    console.log(myCategory.getcategory());
-
-    global.db.collection('category').insertOne(
-        myCategory.getcategory(),
-        function (err, doc) {
+    var createCategory = function () {
+        var category = new Category({
+            code: req.body.code,
+            name: req.body.name
+        });
+        category.save(function (err, docs) {
             if (err) {
-                res.status(400).json({message: err})
+                res.status(400).json({message: err});
             }
-            else
-                res.status(201).json(doc.ops[0]);
-        }
-    );
+            else {
+                res.status(200).json(docs);
+            }
+        });
+    };
+    
+    validatePropertyObject(req.body, ['name','code'])
+        .then(createCategory, errorHandler.bind(null, 400));
+
 };
 

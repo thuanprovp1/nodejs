@@ -1,18 +1,14 @@
 /**
  * Created by Thuan on 10/16/2016.
  */
-var category = function () {
-    this.setcategory = function (barcode, name) {
-        this.barcode = barcode;
-        this.name = name;
-    };
+var mongoose = require("mongoose");
 
-    this.getcategory = function () {
-        return {
-            barcode: this.barcode,
-            name: this.name
-        }
-    }
-};
+var CategorySchema = mongoose.Schema({
+        code: String,
+        name: String
+    },
+    {
+        timestamps: true
+    });
 
-module.exports = category;
+module.exports = mongoose.model('Category', CategorySchema);
