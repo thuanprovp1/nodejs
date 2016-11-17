@@ -20,14 +20,21 @@ var validatePropertyObject = function validatePropertyObject(object, listPropert
                 resolve();
             }
             else {
-                reject(keyInvalid + " invalid!");
+                reject({
+                    status: 400,
+                    message: keyInvalid + " invalid!"
+                });
             }
         }
         catch (ex) {
             console.log('validate property object: ' + ex.toString() + ' inline: ' + ex.stack);
-            reject(ex);
+            reject({
+                status: 500,
+                message: ex
+            });
         }
     });
 };
 
 module.exports = validatePropertyObject;
+

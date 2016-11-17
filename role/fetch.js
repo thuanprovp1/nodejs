@@ -9,7 +9,7 @@ module.exports = function fetchProduct(req, res) {
             res.status(400).json({message: err});
         }
         else {
-            res.status(200).json({data:docs});
+            res.status(200).json({"data": docs});
         }
     });
 };

@@ -3,15 +3,15 @@
  */
 var mongoose = require('mongoose');
 var groupSchema = mongoose.Schema({
-        groupType: {
-            type: mongoose.Schema.Types.ObjectID,
-            ref: 'GroupType'
-        },
-        product:{
-            type: mongoose.Schema.Types.ObjectID,
-            ref: 'Product'
-        }
+    grouptype: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'GroupType'
     },
+    product : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    }
+},
     {
         timestamps: true
     }

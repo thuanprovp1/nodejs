@@ -12,21 +12,30 @@ var validateObjectExist = function validateObjectExist(schema, id) {
                 })
                 .exec(function(err, docs) {
                     if (err) {
-                        reject(err);
+                        reject({
+                            status: 400,
+                            message: err.toString()
+                        });
                     }
                     else {
                         if (docs.length > 0) {
                             resolve();
                         }
                         else {
-                            reject(schema.modelName + ' not fount!');
+                            reject({
+                                status: 400,
+                                message: schema.modelName + ' not fount!'
+                            });
                         }
                     }
                 });
         }
         catch (ex) {
             console.log('validate object message: ' + ex.toString() + ' inline: ' + ex.stack);
-            reject(ex);
+            reject({
+                status: 500,
+                message: ex
+            });
         }
     });
 };

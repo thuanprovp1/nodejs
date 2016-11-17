@@ -18,12 +18,15 @@ var mongoose = require('mongoose');
 //     }
 // };
 var userSchema = mongoose.Schema({
-    username: String,
-    password: String,
-    role : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Role'
-    }
-});
+        username: String,
+        password: String,
+        role: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Role'
+        }
+    }, {
+    timestamps:true
+}
+);
 
 module.exports = mongoose.model('User', userSchema);
