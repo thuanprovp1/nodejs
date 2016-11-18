@@ -2,8 +2,7 @@
  * Created by Thuan on 10/15/2016.
  */
 module.exports = function createUsers(req, res) {
-
-
+    
     var errorHandler = function(status, message) {
         res.status(status).json({
             message: message.toString()
@@ -40,7 +39,6 @@ module.exports = function createUsers(req, res) {
             .catch(function(err) {
                 errorHandler(err.status, err.message);
             });
-
     }   
     catch (ex) {
         console.log('create product: ' + ex.toString() + ' inline: ' + ex.stack);

@@ -1,17 +1,17 @@
 /**
  * Created by Thuan on 10/15/2016.
  */
-module.exports = function updateProducts(req, res) {
+module.exports = function updateProduct(req, res) {
     var errorHandler = function (status, message) {
         res.status(status).json({
             message: message.toString()
         });
     };
+
     try {
         var Product = require('./product.object');
         var Category = require('../category/category.object');
         var User = require('../user/user.object');
-
         var validateObjectExist = require('../utils/validateObjectExist');
         var validatePropertyObject = require('../utils/validatePropertyObject');
 
@@ -19,8 +19,9 @@ module.exports = function updateProducts(req, res) {
             product.code = req.body.code;
             product.name = req.body.name;
             product.price = req.body.price;
-            product.category = req.body.category._id;
-            product.user = req.body.user._id;
+            product.url = req.body.url;
+            product.category = req.body.category;
+            product.user = req.body.user;
 
             product.save(function (err, doc) {
                 if (err) {
@@ -31,20 +32,20 @@ module.exports = function updateProducts(req, res) {
                 }
             });
         };
-        Product.findById(req.body._id, function (err, response) {
+        Product.findById(req.body.id, function (err, response) {
             Promise.all([
-                    validatePropertyObject.call(null, req.body, ['code', 'name','price','category','user' ]),
-                    validateObjectExist.call(null, Category, req.body.category._id),
-                    validateObjectExist.call(null, User, req.body.user._id)
+                    validatePropertyObject.call(null, req.body, ['code', 'name', 'price','url','category','user']),
+                    validateObjectExist.call(null, Category, req.body.category),
+                    validateObjectExist.call(null, User, req.body.user)
                 ])
-                .then(createProduct(response))
+                .then(createProduct.bind(null, response))
                 .catch(function (err) {
                     errorHandler(err.status, err.message);
                 });
         });
     }
     catch (ex) {
-        console.log('update product: ' + ex.toString() + ' inline: ' + ex.stack);
+        console.log('create user: ' + ex.toString() + ' inline: ' + ex.stack);
         errorHandler(500, ex);
     }
 };

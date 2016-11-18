@@ -17,6 +17,7 @@ var mongoose = require('mongoose');
 //         }
 //     }
 // };
+//xem lai version 
 var userSchema = mongoose.Schema({
         username: String,
         password: String,
