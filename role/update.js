@@ -12,7 +12,7 @@ module.exports = function updateRole(req, res) {
         var Role = require('./role.object');
         var validatePropertyObject = require('../utils/validatePropertyObject');
 
-        Role.findById(req.body.id, function(err, response) {
+        Role.findById(req.body._id, function(err, response) {
             if (response) {
                 validatePropertyObject(req.body, ['name'])
                     .then(createRole.bind(null, response), errorHandler.bind(null, 400));

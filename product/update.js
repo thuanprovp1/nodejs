@@ -32,7 +32,7 @@ module.exports = function updateProduct(req, res) {
                 }
             });
         };
-        Product.findById(req.body.id, function (err, response) {
+        Product.findById(req.body._id, function (err, response) {
             Promise.all([
                     validatePropertyObject.call(null, req.body, ['code', 'name', 'price','url','category','user']),
                     validateObjectExist.call(null, Category, req.body.category),

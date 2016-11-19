@@ -24,7 +24,7 @@ module.exports = function updateGroupType(req, res) {
                 }
             });
         };
-        GroupType.findById(req.body.id, function (err, response) {
+        GroupType.findById(req.body._id, function (err, response) {
             Promise.all([
                     validatePropertyObject.call(null, req.body, ['code'])
                 ])

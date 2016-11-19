@@ -12,7 +12,7 @@ module.exports = function updateCategory(req, res) {
         var Category = require('./category.object');
         var validatePropertyObject = require('../utils/validatePropertyObject');
 
-        Category.findById(req.body.id, function(err, response) {
+        Category.findById(req.body._id, function(err, response) {
             if (response) {
                 validatePropertyObject(req.body, ['code', 'name'])
                     .then(createCategory.bind(null, response), errorHandler.bind(null, 400));

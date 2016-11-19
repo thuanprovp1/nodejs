@@ -28,7 +28,7 @@ module.exports = function updateUser(req, res) {
                 }
             });
         };
-        User.findById(req.body.id, function (err, response) {
+        User.findById(req.body._id, function (err, response) {
             Promise.all([
                     validatePropertyObject.call(null, req.body, ['username', 'password', 'role']),
                     validateObjectExist.call(null, Role, req.body.role)
