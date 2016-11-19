@@ -7,8 +7,8 @@ module.exports = function fetchProduct(req, res) {
     var User = require('../user/user.object');
 
     Product.find({})
-        .populate('categories')
-        .populate('users')
+        .populate('category')               //thuoc tinh cua object
+        .populate('user')
         .exec(function (err, docs) {
         if (err) {
             res.status(400).json({message: err});

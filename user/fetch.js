@@ -14,7 +14,7 @@
         var User = require('./user.object');
         var Role = require('../role/role.object');
         User.find({})
-            .populate('roles')
+            .populate('role')
             .exec(function(err, docs) {
                 if (err) {
                     res.status(400).json({
