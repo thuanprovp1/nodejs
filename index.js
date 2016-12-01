@@ -48,4 +48,5 @@ mongoose.connect('mongodb://ds059306.mlab.com:59306/shop_giay', opt, function (e
     require('./group/init').initGroupRouter(app);
     require('./role/init').initRoleRouter(app);
     require('./user/init').initUserRouter(app);
+    require('./login/init').initLoginRouter(app);
 });
