@@ -3,7 +3,7 @@
  */
 exports.initProductRouter = function initProductRouter(app) {
     var passport = require('passport');
-    app.get('/product/fetch', passport.authenticate('jwt', {session: false}), function fetchProduct(req, res) {
+    app.get('/product/fetch', function fetchProduct(req, res) {
         var Product = require('./product.object');
         var Category = require('../category/category.object');
         var User = require('../user/user.object');
