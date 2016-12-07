@@ -4,8 +4,6 @@
 module.exports = function login(req, res) {
     var User = require('../user/user.object');
     var Role = require('../role/role.object');
-    var jwt = require('jwt-simple');
-
     console.log('Login...');
 
     // User.find({
@@ -39,8 +37,7 @@ module.exports = function login(req, res) {
                 res.status(400).json({message: err});
             }
             else if (docs.length > 0) {
-                var token = jwt.encode(docs[0], 'shopgiay');
-                res.status(200).json({'user': docs[0], token: 'JWT ' + token});
+                res.status(200).json(docs[0]);
             }
             else {
                 res.status(400).json({message: "Invalid username or password"})

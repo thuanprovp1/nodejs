@@ -4,12 +4,17 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
+var jwt = require('jwt-simple');
+var passport = require('passport');
+var cors = require('cors');
 
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 var server = app.listen(process.env.port | 8080, function () {
     var port = server.address().port;
@@ -25,13 +30,7 @@ var opt = {
 };
 
 
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    next();
-});
+
 
 // mongodb.MongoClient.connect('mongodb://thuanprovp1:123456@ds059306.mlab.com:59306/shop_giay', function (err, database) {
 mongoose.Promise = global.Promise;
@@ -49,4 +48,5 @@ mongoose.connect('mongodb://ds059306.mlab.com:59306/shop_giay', opt, function (e
     require('./role/init').initRoleRouter(app);
     require('./user/init').initUserRouter(app);
     require('./login/init').initLoginRouter(app);
+    require('./logout/init').initLoginRouter(app);
 });
