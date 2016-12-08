@@ -29,9 +29,6 @@ var opt = {
     }
 };
 
-
-
-
 // mongodb.MongoClient.connect('mongodb://thuanprovp1:123456@ds059306.mlab.com:59306/shop_giay', function (err, database) {
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://ds059306.mlab.com:59306/shop_giay', opt, function (err, database) {
@@ -41,12 +38,12 @@ mongoose.connect('mongodb://ds059306.mlab.com:59306/shop_giay', opt, function (e
     }
     console.log("Database connected");
 
-    require('./product/init').initProductRouter(app);
-    require('./group_type/init').initGrouptypeRouter(app);
-    require('./category/init').initCategoryRouter(app);
-    require('./group/init').initGroupRouter(app);
-    require('./role/init').initRoleRouter(app);
-    require('./user/init').initUserRouter(app);
-    require('./login/init').initLoginRouter(app);
-    require('./logout/init').initLoginRouter(app);
+    require('./product/product.init').initProductRouter(app);
+    require('./group_type/group-type.init').initGrouptypeRouter(app);
+    require('./category/category.init').initCategoryRouter(app);
+    require('./group/group.init').initGroupRouter(app);
+    require('./role/role.init').initRoleRouter(app);
+    require('./user/user.init').initUserRouter(app);
+    require('./login/login.init').initLoginRouter(app);
+    require('./logout/logout.init').initLoginRouter(app);
 });
